@@ -1,0 +1,67 @@
+{
+    "players": {
+        "1": {
+            "first_name": "Thierno",
+            "last_name": "Thiam",
+            "birthday": "Wednesday 31 March 1993",
+            "gender": "man",
+            "ranking": "1"
+        },
+        "2": {
+            "first_name": "Laurent",
+            "last_name": "Jouron",
+            "birthday": "Wednesday 02 June 1976",
+            "gender": "man",
+            "ranking": "2"
+        },
+        "3": {
+            "first_name": "Louis",
+            "last_name": "Jouron",
+            "birthday": "Thursday 20 May 2010",
+            "gender": "man",
+            "ranking": "3"
+        },
+        "4": {
+            "first_name": "Antoine",
+            "last_name": "Jouron",
+            "birthday": "Thursday 17 November 2011",
+            "gender": "man",
+            "ranking": "4"
+        },
+        "5": {
+            "first_name": "Virginie",
+            "last_name": "Lombard",
+            "birthday": "Friday 29 December 1978",
+            "gender": "woman",
+            "ranking": "5"
+        },
+        "6": {
+            "first_name": "Marie",
+            "last_name": "Libert",
+            "birthday": "Saturday 21 March 1953",
+            "gender": "woman",
+            "ranking": "6"
+        },
+        "7": {
+            "first_name": "Stephane",
+            "last_name": "Jouron",
+            "birthday": "Friday 22 March 1974",
+            "gender": "man",
+            "ranking": "7"
+        },
+        "8": {
+            "first_name": "Julia",
+            "last_name": "Pertin",
+            "birthday": "Tuesday 09 June 1992",
+            "gender": "woman",
+            "ranking": "8"
+        },
+        "9": {
+            "first_name": "Severine",
+            "last_name": "Wilhelm",
+            "birthday": "Tuesday 14 June 1977",
+            "gender": "woman",
+            "ranking": "9"
+        }
+    }
+}
