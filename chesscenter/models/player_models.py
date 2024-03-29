@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+
 from tinydb import TinyDB
 
 from ..utils.constants import DB_PLAYERS
@@ -7,8 +8,11 @@ from ..utils.constants import DB_TOURNAMENTS_PLAYERS
 
 
 class PlayerModel:
-    db_players = TinyDB(DB_PLAYERS)
-    db_tournaments_players = TinyDB(DB_TOURNAMENTS_PLAYERS)
+    db_players = TinyDB(DB_PLAYERS, indent=4)
+    data_players = db_players.table("players")
+
+    db_tournaments_players = TinyDB(DB_TOURNAMENTS_PLAYERS, indent=4)
+    data_tp = db_tournaments_players.table("tournaments_players")
 
     def __init__(self, **kwargs):
         self._id_number: int = kwargs["id_number"]
@@ -136,7 +140,7 @@ class PlayerModel:
         return deserialized_player
 
     def save_db_tournaments_players(self):
-        PlayerModel.db_tournaments_players.insert(self)
+        PlayerModel.data_tp.insert(self)
 
     def save_db_players(self):
         PlayerModel.db_players.insert(self)

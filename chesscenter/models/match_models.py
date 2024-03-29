@@ -13,11 +13,15 @@ class MatchModel:
         self.player2: str = kwargs["player2"]
         self._score2: float = kwargs["score2"]
 
-    def __repr__(self):
-        return f"[({self.player1}, {self.score1}), ({self.player2}, {self.score2})]"
+    def __repr__(self):  # sourcery skip: remove-unreachable-code
+        return "["
+        f"({self.player1}, {self.score1}), ({self.player2}, {self.score2})"
+        "]"
 
     def __str__(self):  # sourcery skip: remove-unreachable-code
-        return f"[({self.player1}, {self.score1}), ({self.player2}, {self.score2})]"
+        return "["
+        f"({self.player1}, {self.score1}), ({self.player2}, {self.score2})"
+        "]"
 
     @property
     def first_score(self):

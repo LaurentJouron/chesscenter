@@ -5,10 +5,12 @@ from operator import attrgetter
 from operator import itemgetter
 from tinydb import TinyDB
 import json
+from ..utils.constants import DB_TOURNAMENTS
 
 
 class TournamentModel:
-    db = TinyDB("models/tournaments_database.json")
+    db = TinyDB(DB_TOURNAMENTS, indent=4)
+    data = db.table("tournament")
     num_rounds = 0
     rounds_list = []
 
@@ -65,7 +67,7 @@ class TournamentModel:
 
     @location.setter
     def location(self, new_location):
-        if all(x.isalpha() or x.isspace() for x in new_location) is False:
+        if not all(char.isalpha() or char.isspace() for char in new_location):
             print("Please enter a valid location.")
         self._location = new_location
 
@@ -123,7 +125,7 @@ class TournamentModel:
 
     @time_control.setter
     def time_control(self, new_time_control):
-        if not new_time_control.lower() in ("blitz", "rapid", "bullet"):
+        if new_time_control.lower() not in ("blitz", "rapid", "bullet"):
             print("Please enter a valid time control (blitz, bullet, rapid).")
         self._time_control = new_time_control
 
@@ -135,17 +137,16 @@ class TournamentModel:
     def description(self, new_description):
         self._description = new_description
 
-    def generate_pairs_by_ranking(players):
+    def generate_pairs_by_ranking(self):
         rankings_to_sort = sorted(
-            players, key=attrgetter("ranking"), reverse=True
+            self, key=attrgetter("ranking"), reverse=True
         )
         first_half = rankings_to_sort[:4]
         second_half = rankings_to_sort[4:]
-        ranking_pairs = [(first_half[i], second_half[i]) for i in range(0, 4)]
-        return ranking_pairs
+        return [(first_half[i], second_half[i]) for i in range(4)]
 
-    def invert_pair(pair):
-        return (pair[1], pair[0])
+    def invert_pair(self):
+        return self[1], self[0]
 
     def swiss_pair(list1, n, list2, k, i, j):
         list1[n] = (list2[2 * n], list2[2 * n + i])
