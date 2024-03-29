@@ -143,4 +143,4 @@ class PlayerModel:
         PlayerModel.data_tp.insert(self)
 
     def save_db_players(self):
-        PlayerModel.db_players.insert(self)
+        PlayerModel.data_players.insert(self)
