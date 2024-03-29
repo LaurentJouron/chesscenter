@@ -53,7 +53,7 @@ class ControllerPlayer:
         view.generate_player()
         player = ControllerPlayer.add_player_to_tournament()
         serialized_player = PlayerModel.serialize_player(player)
-        PlayerModel.save_player_to_database(serialized_player)
+        PlayerModel.save_db_players(serialized_player)
         return serialized_player
 
     def add_player_to_database():

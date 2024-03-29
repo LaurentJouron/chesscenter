@@ -7,7 +7,7 @@ class BaseDate(BaseView):
     date_validator = None
 
     def display_format_error(self):
-        print("Invalid date format. Please use dd-mm-aaaa format.")
+        print("Invalid date format. Please use DD-MM-YYYY format.")
 
     def display_invalid_date(self):
         print("Invalid date. Please enter a date not earlier than today.")
