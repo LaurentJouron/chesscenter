@@ -161,11 +161,12 @@ class TournamentModel:
             (players_by_score[i], players_by_score[i + 1])
             for i in range(0, 7, 2)
         ]
-        pairs = [players_by_score, score_pairs]
+        round_pairs = [players_by_score, score_pairs]
+
         players_by_score = round_pairs[0]
         round_pairs = round_pairs[1]
 
-        for pair in pairs:
+        for pair in round_pairs:
             inverted_pair = TournamentModel.invert_pair(pair)
             pair_index = round_pairs.index(pair)
             n = pair_index
@@ -185,8 +186,8 @@ class TournamentModel:
                     if (round_pairs[n] or inverted_pair) in pairs_list:
                         print("Redundant pair: ")
                         print(
-                            f"{round_pairs[n][0].last_name} ({round_pairs[n][0].id_number})"
-                            + f" vs {round_pairs[n][1].last_name} ({round_pairs[n][1].id_number})\n"
+                            f"{round_pairs[n][0].last_name} ({round_pairs[n][0].id_number}) "
+                            f"vs {round_pairs[n][1].last_name} ({round_pairs[n][1].id_number})\n"
                         )
                         TournamentModel.swiss_pair(
                             round_pairs, n, players_by_score, 1, 3, 2
