@@ -6,9 +6,10 @@ from ..utils.bases.menus import BaseMenu
 class PlayerView(BaseMenu, BaseView):
     gender_menu: dict = {"1": "Male", "2": "Female"}
     player_menu: dict = {
-        "1": "Get all",
-        "2": "Change rank",
+        "1": "Generate",
+        "2": "Get all",
         "3": "Create",
+        "4": "Detail",
         "5": "Return",
     }
     search_player: dict = {

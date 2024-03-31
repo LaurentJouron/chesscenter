@@ -16,13 +16,13 @@ class HomeController(BaseController):
         while True:
             choice = view.display_menu(view.home_menu)
             if choice == "1":
-                print("Generate tournois")
-
-            elif choice == "2":
                 return PlayerController()
 
+            elif choice == "2":
+                print("tournament")
+
             elif choice == "3":
-                print("Tournament")
+                print("match")
                 # return TournamentController()
 
             elif choice == "4":

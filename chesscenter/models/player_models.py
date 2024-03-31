@@ -1,7 +1,6 @@
-import json
-from datetime import datetime
-
-from tinydb import TinyDB
+from tinydb import TinyDB, where, table
+from typing import List
+import string
 
 from ..utils.constants import DB_PLAYERS
 from ..utils.constants import DB_TOURNAMENTS_PLAYERS
@@ -14,24 +13,22 @@ class PlayerModel:
     db_tournaments_players = TinyDB(DB_TOURNAMENTS_PLAYERS, indent=4)
     data_tp = db_tournaments_players.table("tournaments_players")
 
-    def __init__(
-        self, id_number, last_name, first_name, birthday, gender, rank
-    ):
-        self._id_number: int = id_number
-        self._last_name: str = last_name
-        self._first_name: str = first_name
-        self._birthday: str = birthday
-        self._gender: str = gender
-        self._rank: int = rank
-        self._score: float = 0.0
+    def __init__(self, **kwargs):
+        self.id_number: int = kwargs["id_number"]
+        self.last_name: str = kwargs["last_name"]
+        self.first_name: str = kwargs["first_name"]
+        self.birthday: str = kwargs["birthday"]
+        self.gender: str = kwargs["gender"]
+        self.rank: int = kwargs["rank"]
+        self.score = 0.0
 
     def __repr__(self):
         return (
-            f"(Player {self.id_number}: {self.first_name} {self.last_name}, "
-            f"Gender: {self.gender}, "
-            f"Birthday: {self.birthday}, "
-            f"Rank: {self.rank}, "
-            f"Score: {self.score})"
+            f"(Player {self.id_number}: {self.first_name} {self.last_name}, \t"
+            f"Gender: {self.gender}, \t"
+            f"Birthday: {self.birthday}, \t"
+            f"Rank: {self.rank}, \t"
+            f"Score: {self.score})\n"
         )
 
     def __str__(self):
@@ -45,104 +42,88 @@ class PlayerModel:
         )
 
     @property
-    def last_name(self):
-        return self._last_name.upper()
-
-    @last_name.setter
-    def last_name(self, last_name):
-        if not all(char.isalpha() or char.isspace() for char in last_name):
-            print("Please enter a valid last name.")
-        self._last_name = last_name
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     @property
-    def first_name(self):
-        return self._first_name
+    def db_instance(self) -> table.Document:
+        return PlayerModel.data_players.get(
+            (where("id_number") == self.id_number)
+        )
 
-    @first_name.setter
-    def first_name(self, first_name):
-        if not all(char.isalpha() or char.isspace() for char in first_name):
-            print("Please enter a valid first name.")
-        self._first_name = first_name
+    def save_player(self, validate_data: bool = False) -> int:
+        if validate_data:
+            self._checks()
+        return (
+            -1
+            if self.exists()
+            else PlayerModel.data_players.insert(self.__dict__)
+        )
 
-    @property
-    def id_number(self):
-        return self._id_number
+    def _checks(self):
+        self._check_names()
 
-    @property
-    def birth_date(self):
-        return self._birth_date
+    def _check_names(self):
+        if not self.first_name:
+            raise ValueError("First and last name cannot be blank.")
+        special_characters = string.punctuation + string.digits
+        for character in self.first_name + self.last_name:
+            if character in special_characters:
+                raise ValueError(f"Value error {self.full_name}.")
 
-    @birth_date.setter
-    def birth_date(self, new_date):
-        try:
-            new_date = datetime.strptime(new_date, "%Y.%m.%d").date()
-        except ValueError:
-            print("Please enter a valid birth date (YYYY.MM.DD).")
-        self._birth_date = new_date
+    def exists(self):
+        return bool(self.db_instance)
 
-    @property
-    def gender(self):
-        return self._gender.upper()
+    @classmethod
+    def remove_by_code(cls, player_code):
+        return cls.data.remove(where("player_code") == player_code)
 
-    @gender.setter
-    def gender(self, new_gender):
-        if str(new_gender) not in "mMfF" or new_gender.isalpha() is False:
-            print("Please enter a valid gender (M/F).")
-        self._gender = new_gender
+    @classmethod
+    def get_all(cls) -> List["PlayerModel"]:
+        return [cls(**player) for player in cls.data_players.all()]
 
-    @property
-    def rank(self):
-        return self._rank
+    @classmethod
+    def get_one_by_code(cls, player_code) -> "PlayerModel":
+        if player_data := cls.data_players.search(
+            where("player_code") == player_code
+        ):
+            return cls(**player_data[0])
+        return None
 
-    @rank.setter
-    def rank(self, rank):
-        if not isinstance(rank, float):
-            print("Please enter a valid rank (positive float).")
-        self._rank = rank
-
-    @property
-    def score(self):
-        return self._score
-
-    @score.setter
-    def score(self, score):
-        if score % 0.5 != 0:
-            print("Please enter a valid score.")
-        self._score = score
+    def update_rank(self, new_rank):
+        self.rank = new_rank
 
     def serialize_player(self):
-        serialized_player = {}
-        json.dumps(serialized_player, default=str)
-        serialized_player["id_number"] = self.id_number
-        serialized_player["last_name"] = self.last_name
-        serialized_player["first_name"] = self.first_name
-        serialized_player["birthday"] = self._birthday
-        serialized_player["gender"] = self.gender
-        serialized_player["rank"] = self.rank
-        serialized_player["score"] = self.score
-        return serialized_player
+        return {
+            "id_number": self.id_number,
+            "last_name": self.last_name,
+            "first_name": self.first_name,
+            "birthday": self.birthday,
+            "gender": self.gender,
+            "rank": self.rank,
+            "score": self.score,
+        }
 
     def deserialize_player(self):
-        id_number = self["id_number"]
+        """A function to deserialize a player."""
+
         last_name = self["last_name"]
         first_name = self["first_name"]
-        birthday = self["birthday"]
+        id_number = self["id_number"]
+        birth_date = self["birth_date"]
         gender = self["gender"]
-        rank = self["rank"]
+        ranking = self["ranking"]
         score = self["score"]
         deserialized_player = PlayerModel(
-            id_number=id_number,
             last_name=last_name,
             first_name=first_name,
-            birthday=birthday,
+            id_number=id_number,
+            birth_date=birth_date,
             gender=gender,
-            rank=rank,
+            ranking=ranking,
         )
         deserialized_player.score = score
         return deserialized_player
 
-    def save_db_tournaments_players(self):
-        PlayerModel.data_tp.insert(self)
-
-    def save_db_players(self):
-        PlayerModel.data_players.insert(self)
+    def save_tournament_player(self, player_instance):
+        PlayerModel.data_tp.insert(player_instance.serialize_player())

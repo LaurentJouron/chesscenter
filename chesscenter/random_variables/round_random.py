@@ -1,114 +1,52 @@
 import json
+import random
+from datetime import datetime, timedelta
+from ..utils.constants import NUMBER_OF_DAY
 
 
 class RandomRound:
-    # List of the random start dates already attributed
+    dates_attributed = []
 
-    random_dates_attributed = []
+    @staticmethod
+    def generate_random_round():
+        """Generate random start and end dates for a round."""
+        start_date, end_date = RandomRound.generate_dates()
+        return (start_date, end_date)
 
-    # Database of start dates
-    random_start_dates = [
-        "2024.03.03 (08:30:00)",
-        "2024.03.03 (11:00:00)",
-        "2024.03.03 (15:00:00)",
-        "2024.03.03 (17:30:00)",
-        "2024.03.15 (08:30:00)",
-        "2024.03.15 (11:00:00)",
-        "2024.03.15 (15:00:00)",
-        "2024.03.15 (17:30:00)",
-        "2024.05.20 (08:30:00)",
-        "2024.05.20 (11:00:00)",
-        "2024.05.20 (15:00:00)",
-        "2024.05.20 (17:30:00)",
-        "2024.06.29 (08:30:00)",
-        "2024.06.29 (11:00:00)",
-        "2024.06.29 (15:00:00)",
-        "2024.06.29 (17:30:00)",
-        "2024.07.01 (08:30:00)",
-        "2024.07.01 (11:00:00)",
-        "2024.07.01 (15:00:00)",
-        "2024.07.01 (17:30:00)",
-        "2024.07.10 (08:30:00)",
-        "2024.07.10 (11:00:00)",
-        "2024.07.10 (15:00:00)",
-        "2024.07.10 (17:30:00)",
-        "2024.08.29 (08:30:00)",
-        "2024.08.29 (11:00:00)",
-        "2024.08.29 (15:00:00)",
-        "2024.08.29 (17:30:00)",
-        "2024.09.07 (08:30:00)",
-        "2024.09.07 (11:00:00)",
-        "2024.09.07 (15:00:00)",
-        "2024.09.07 (17:30:00)",
-        "2024.09.13 (08:30:00)",
-        "2024.09.13 (11:00:00)",
-        "2024.09.13 (15:00:00)",
-        "2024.09.13 (17:30:00)",
-        "2024.10.03 (08:30:00)",
-        "2024.10.03 (11:00:00)",
-        "2024.10.03 (15:00:00)",
-        "2024.10.03 (17:30:00)",
-    ]
+    @staticmethod
+    def generate_dates():
+        """Generate random start and end dates."""
+        current_date = datetime.now()
 
-    # Database of end dates
-    random_end_dates = [
-        "2024.03.03 (10:00:00)",
-        "2024.03.03 (13:00:00)",
-        "2024.03.03 (17:00:00)",
-        "2024.03.03 (19:00:00)",
-        "2024.03.15 (10:00:00)",
-        "2024.03.15 (13:00:00)",
-        "2024.03.15 (17:00:00)",
-        "2024.03.15 (19:00:00)",
-        "2024.05.20 (10:00:00)",
-        "2024.05.20 (13:00:00)",
-        "2024.05.20 (17:00:00)",
-        "2024.05.20 (19:00:00)",
-        "2024.06.29 (10:00:00)",
-        "2024.06.29 (13:00:00)",
-        "2024.06.29 (17:00:00)",
-        "2024.06.29 (19:00:00)",
-        "2024.07.01 (10:00:00)",
-        "2024.07.01 (13:00:00)",
-        "2024.07.01 (17:00:00)",
-        "2024.07.01 (19:00:00)",
-        "2024.07.10 (10:00:00)",
-        "2024.07.10 (13:00:00)",
-        "2024.07.10 (17:00:00)",
-        "2024.07.10 (19:00:00)",
-        "2024.08.29 (10:00:00)",
-        "2024.08.29 (13:00:00)",
-        "2024.08.29 (17:00:00)",
-        "2024.08.29 (19:00:00)",
-        "2024.09.07 (10:00:00)",
-        "2024.09.07 (13:00:00)",
-        "2024.09.07 (17:00:00)",
-        "2024.09.07 (19:00:00)",
-        "2024.09.13 (10:00:00)",
-        "2024.09.13 (13:00:00)",
-        "2024.09.13 (17:00:00)",
-        "2024.09.13 (19:00:00)",
-        "2024.10.03 (10:00:00)",
-        "2024.10.03 (13:00:00)",
-        "2024.10.03 (17:00:00)",
-        "2024.10.03 (19:00:00)",
-    ]
+        start_year = random.randint(2024, 2025)
+        start_month = random.randint(1, 12)
+        start_day = random.randint(1, 28)
+        start_hour = random.choice([8, 11, 15, 17])
+        start_minutes = random.choice([0, 30])
+        start_date = datetime(
+            start_year, start_month, start_day, start_hour, start_minutes
+        )
 
-    def __init__(self, **kwargs):
-        self.start_date: str = kwargs["start_date"]
-        self.end_date: str = kwargs["end_date"]
+        min_duration = timedelta(days=NUMBER_OF_DAY)
+        end_date = start_date + min_duration
 
-    def generate_random_round(self, i):
-        random_start_date = self.random_start_dates[self - 1 + 4 * (i - 1)]
-        random_end_date = self.random_end_dates[self - 1 + 4 * (i - 1)]
-        self.random_dates_attributed.append(random_start_date)
+        while end_date < current_date:
+            end_year = random.randint(start_year, 2025)
+            end_month = random.randint(start_month, 12)
+            end_day = random.randint(start_day, 28)
+            end_hour = random.choice([8, 11, 15, 17])
+            end_minutes = random.choice([0, 30])
+            end_date = datetime(
+                end_year, end_month, end_day, end_hour, end_minutes
+            )
 
-        return (random_start_date, random_end_date)
+        return start_date, end_date
 
-    def serialize_random_round(self):
-        serialized_round = {}
-        json.dumps(serialized_round, default=str)
-        serialized_round["matches"] = self.matches
-        serialized_round["start_date"] = self.start_date
-        serialized_round["end_date"] = self.end_date
-        return serialized_round
+    def serialize_random_round(self, start_date, end_date):
+        """Serialize round data into a JSON object."""
+        serialized_round = {
+            "matches": self.matches,
+            "start_date": start_date.strftime("%Y.%m.%d (%H:%M:%S)"),
+            "end_date": end_date.strftime("%Y.%m.%d (%H:%M:%S)"),
+        }
+        return json.dumps(serialized_round, default=str)

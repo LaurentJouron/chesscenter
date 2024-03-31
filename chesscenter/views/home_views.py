@@ -3,9 +3,9 @@ from ..utils.bases.menus import BaseMenu
 
 class HomeView(BaseMenu):
     home_menu: dict = {
-        "1": "Generate tournament",
-        "2": "Player",
-        "3": "tournament",
+        "1": "Player",
+        "2": "tournament",
+        "3": "Match",
         "4": "Tour",
         "5": "Quit",
     }
