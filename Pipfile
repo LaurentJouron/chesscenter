@@ -9,6 +9,18 @@ autopep8 = "*"
 flask = "*"
 flake8 = "*"
 flake8-html = "*"
+pyfiglet = "*"
+importlib-metadata = "*"
+jinja2 = "*"
+markupsafe = "*"
+mccabe = "*"
+path = "*"
+"path.py" = "*"
+pycodestyle = "*"
+pyflakes = "*"
+pygments = "*"
+zipp = "*"
+faker = "*"
 
 [dev-packages]
 

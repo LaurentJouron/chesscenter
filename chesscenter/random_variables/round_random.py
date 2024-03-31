@@ -1,7 +1,7 @@
 import json
 
 
-class RoundRandom:
+class RandomRound:
     # List of the random start dates already attributed
 
     random_dates_attributed = []
@@ -99,11 +99,9 @@ class RoundRandom:
         self.end_date: str = kwargs["end_date"]
 
     def generate_random_round(self, i):
-        random_start_date = RoundRandom.random_start_dates[
-            self - 1 + 4 * (i - 1)
-        ]
-        random_end_date = RoundRandom.random_end_dates[self - 1 + 4 * (i - 1)]
-        RoundRandom.random_dates_attributed.append(random_start_date)
+        random_start_date = self.random_start_dates[self - 1 + 4 * (i - 1)]
+        random_end_date = self.random_end_dates[self - 1 + 4 * (i - 1)]
+        self.random_dates_attributed.append(random_start_date)
 
         return (random_start_date, random_end_date)
 

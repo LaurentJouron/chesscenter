@@ -1,4 +1,5 @@
 import re
+from pyfiglet import Figlet
 from chesscenter.utils.constants import SIZE_LINE
 
 
@@ -12,15 +13,24 @@ def _get_int(var):
     return bool(re.match(pattern, var))
 
 
+def _get_float(var):
+    try:
+        var = float(var)
+        return True
+    except ValueError:
+        return False
+
+
 class BaseView:
     string_validator = _get_string
     integer_validator = _get_int
+    float_validator = _get_float
 
     def _get_string(self, prompt, validator=None):
         validator = validator or type(self).string_validator
         while True:
             answer = input(prompt).strip()
-            if validator(answer):
+            if validator(answer) and answer > 0:
                 return answer
 
     def _get_int(self, prompt, validator=None):
@@ -29,6 +39,13 @@ class BaseView:
             answer = input(prompt).strip()
             if validator(answer):
                 return int(answer)
+
+    def _get_float(self, prompt, validator=None):
+        validator = validator or type(self).float_validator
+        while True:
+            answer = input(prompt).strip()
+            if validator(answer):
+                return float(answer)
 
     def _select_number(self):
         while True:
@@ -49,14 +66,21 @@ class BaseView:
     def _star_presentation(self, prompt):
         print(f"\n{prompt.center(SIZE_LINE, '*')}")
 
-    def _message_error(self, value=""):
+    def _value_error(self, value=""):
         if value != "":
             print(f"\n{value} is value error.")
         else:
             print("Value error.")
 
-    def _message_success(self):
+    def _success_message(self):
         print("Successfully.")
+
+    def _display_message(self, prompt):
+        print(prompt)
+
+    def _display_pyfiglet(self, prompt):
+        f = Figlet(font="ivrit")
+        print(f.renderText(prompt))
 
     def _enter_information(self):
         return self._star_presentation(" Enter information ")
@@ -66,8 +90,3 @@ class BaseView:
 
     def display_made_your_choice(self):
         print(self._space_presentation(" MADE YOUR CHOICE "))
-
-
-class BasePlayer(BaseView):
-    def get_player_id(self):
-        return self._get_int("Enter player ID number:")

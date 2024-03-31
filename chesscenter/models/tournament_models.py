@@ -1,5 +1,3 @@
-import json
-
 from datetime import datetime
 from operator import attrgetter
 from operator import itemgetter
@@ -7,7 +5,7 @@ from tinydb import TinyDB
 
 from ..utils.constants import DB_TOURNAMENTS
 from .match_models import MatchModel
-from .round_models import ModelRound, RoundModel
+from .round_models import RoundModel
 
 
 class TournamentModel:
@@ -240,44 +238,6 @@ class TournamentModel:
                             players_by_score[5],
                         )
         return round_pairs
-
-    def serialize_tournament(self):
-        serialized_tournament = {}
-        json.dumps(serialized_tournament, default=str)
-        serialized_tournament["name"] = self.name
-        serialized_tournament["location"] = self.location
-        serialized_tournament["start_date"] = self.start_date.strftime(
-            "%Y.%m.%d (%H:%M:%S)"
-        )
-        serialized_tournament["end_date"] = self.end_date.strftime(
-            "%Y.%m.%d (%H:%M:%S)"
-        )
-        serialized_tournament["description"] = self.description
-        serialized_tournament["time_control"] = self.time_control
-        serialized_tournament["players_list"] = self.players_list
-        serialized_tournament["rounds"] = self.rounds
-        return serialized_tournament
-
-    def deserialize_tournament(self):
-        name = self["name"]
-        location = self["location"]
-        start_date = self["start_date"]
-        end_date = self["end_date"]
-        description = self["description"]
-        time_control = self["time_control"]
-        players_list = self["players_list"]
-        rounds = self["rounds"]
-        deserialized_tournament = TournamentModel(
-            name=name,
-            location=location,
-            start_date=start_date,
-            end_date=end_date,
-            description=description,
-            time_control=time_control,
-            players_list=players_list,
-        )
-        deserialized_tournament.rounds = rounds
-        return deserialized_tournament
 
     def save_tournament_to_tournaments_database(self):
         TournamentModel.db_tournament.insert(self)

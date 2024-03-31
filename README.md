@@ -60,35 +60,68 @@ Activer l'environnement de travail (environnement virtuel) avec
 Pour lancer l'application depuis le terminal
   * ``python -m chesscenter``
 
+___
+
+<h1 align="center">Générer de données</h1>
+
+Certaines fonctions - comme la revue des joueurs et les tournois - ne sont vraiment utiles qu’après avoir généré une base de données.
+
+En plus du programme, un ensemble de données (joueurs, matchs, tours) a été ajouté pour générer des tournois de façon aléatoire.
+
+Pour générer un tournoi, lancer le fichier ``tournament_random.py`` à partir d'un terminal, dans le dossier de niveau supérieur du projet :
+  * ``python random_tournament.py``
+
+Le script va générer un ensemble de 50 joueurs et 10 tournois aléatoires.
+
+
+___
+
+<h1 align="center">Base de données des joueurs</h1>
+
+Cette option donne accès à la base de données de tous les joueurs.
+
+Les actions suivantes sont possibles :
+
+  - Voir tous les joueurs de la base de données et les trier par classement ou par nom.
+
+  - Changer le classement des joueurs.
+
+  - Ajouter un nouveau joueur.
+
 ___________
 
-* Page d'accueil
-  * 1 - Player
-    * 1 - Create
-      * ``player_code``
-      * ``first_name``
-      * ``last_name``
-      * ``birthday``
-      * ``gender``
-      * ``rank``
+<h1 align="center">Base de données des tournois</h1>
 
+Cette option donne accès à la base de données de tous les tournois.
 
-  * 2 - Tournament
-    * 1 - Create
-      * ``name``
-      * ``place``
-      * ``nbr_round``
-      * ``start_date``
-      * ``end_date``
-      * ``current_round``
-      * ``comment``
+Les actions suivantes sont possibles :
 
-  * 3 - Match
+  - Voir tous les tournois de la base de données, ainsi que les détails de tout tournoi.
 
-  * 4 - Round
+  - Voir les joueurs du tournoi : Recherchez un tournoi par nom, lieu ou année, et triez ses joueurs par classement ou par nom de famille.
+
 ___________
 
+<h1 align="center">Générer un rapport flake8-html</h1>
 
+flake8-html est un plugin de flake8 qui génère des rapports HTML de violations de flake8.
+
+flake8 est un outil de linting pour Python qui vérifie le code source afin de détecter les erreurs de syntaxe, les violations de style et les problèmes de formatage conformément aux directives de la PEP8. Il combine plusieurs outils populaires tels que PyFlakes, pycodestyle (anciennement pep8), et McCabe pour fournir une vérification complète du code.
+
+Installation de flake8
+  * ``pipenv install flake8``
+
+
+Installation du plugin flake8-html:
+  * ``pip install flake8-html``
+
+Exécuter flake8 à partir du dossier top_level du programme:
+
+  * ``flake8 --format=html --htmldir=flake-report``
+
+Ouvrez le fichier flake-report et lancez le fichier index.html dans un navigateur pour voir le resultat.
+
+___________
 
 <h1 align="center">Auteur et collaborateurs</h1>
 

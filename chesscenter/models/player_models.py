@@ -14,14 +14,16 @@ class PlayerModel:
     db_tournaments_players = TinyDB(DB_TOURNAMENTS_PLAYERS, indent=4)
     data_tp = db_tournaments_players.table("tournaments_players")
 
-    def __init__(self, **kwargs):
-        self._id_number: int = kwargs["id_number"]
-        self._last_name: str = kwargs["last_name"]
-        self._first_name: str = kwargs["first_name"]
-        self._birthday: str = kwargs["birthday"]
-        self._gender: str = kwargs["gender"]
-        self._rank: int = kwargs["rank"]
-        self._score: float = kwargs["0"]
+    def __init__(
+        self, id_number, last_name, first_name, birthday, gender, rank
+    ):
+        self._id_number: int = id_number
+        self._last_name: str = last_name
+        self._first_name: str = first_name
+        self._birthday: str = birthday
+        self._gender: str = gender
+        self._rank: int = rank
+        self._score: float = 0.0
 
     def __repr__(self):
         return (
@@ -54,7 +56,7 @@ class PlayerModel:
 
     @property
     def first_name(self):
-        return self._first_name.title()
+        return self._first_name
 
     @first_name.setter
     def first_name(self, first_name):
@@ -114,7 +116,7 @@ class PlayerModel:
         serialized_player["id_number"] = self.id_number
         serialized_player["last_name"] = self.last_name
         serialized_player["first_name"] = self.first_name
-        serialized_player["birthday"] = self.birthday
+        serialized_player["birthday"] = self._birthday
         serialized_player["gender"] = self.gender
         serialized_player["rank"] = self.rank
         serialized_player["score"] = self.score
