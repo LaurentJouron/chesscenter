@@ -1,13 +1,13 @@
 import random
 import json
-from models.model_tournament import ModelTournament
-from models.model_match import ModelMatch
-from models.model_round import ModelRound
-from id_database.id_numbers_database import players_id_database
-from random_variables.random_player import RandomPlayer
-from random_variables.random_round import RandomRound
-from random_variables.random_match import RandomMatch
-from models.model_player import ModelPlayer
+from chesscenter.models.model_tournament import ModelTournament
+from chesscenter.models.model_match import ModelMatch
+from chesscenter.models.model_round import ModelRound
+from chesscenter.id_database.id_numbers_database import players_id_database
+from chesscenter.random_variables.random_player import RandomPlayer
+from chesscenter.random_variables.random_round import RandomRound
+from chesscenter.random_variables.random_match import RandomMatch
+from chesscenter.models.model_player import ModelPlayer
 from tinydb import Query
 
 """A script to generate random tournament from random variables
