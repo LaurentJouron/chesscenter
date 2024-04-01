@@ -1,9 +1,10 @@
-class RoundView:
+class ViewRound():
 
-    line = 100 * "*"
+    line = (100*"*")
 
     @staticmethod
-    def start_round(self, i):
+    def start_round(i):
+
         """A static method to announce the start of a round."""
 
         print("\n")
@@ -11,10 +12,11 @@ class RoundView:
         print(round_i)
         print("Number of matches : 4")
         input("Press Enter to start the round").center(100, " ")
-        print(self.line)
+        print(ViewRound.line)
 
     @staticmethod
     def print_round_results(i, start_date, end_date, list_of_matches):
+
         """A static method to print the results of a round."""
 
         print(f"ROUND {i} RESULTS")

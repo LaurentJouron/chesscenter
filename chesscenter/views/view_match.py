@@ -1,33 +1,28 @@
-class ViewMatch:
+class ViewMatch():
 
-    line = 100 * "-"
+    line = (100*"-")
 
     @staticmethod
     def start_match(first_player, second_player):
+
         """A static method to announce a match."""
 
-        print(
-            f"NEXT MATCH : {first_player[0]} ({first_player[1]}) vs {second_player[0]} ({second_player[1]})"
-        )
+        print(f"NEXT MATCH : {first_player[0]} ({first_player[1]}) vs {second_player[0]} ({second_player[1]})")
 
     @staticmethod
     def get_match_result(first_player, first_id):
+
         """A static method to enter the results of a match."""
 
-        result = input(
-            f"Enter result for {first_player} ({first_id}) => W (wins), L (looses), D (draw): "
-        )
+        result = input(f"Enter result for {first_player} ({first_id}) => W (wins), L (looses), D (draw): ")
         while result not in ("wWlLdD"):
-            result = input(
-                f"Enter result for {first_player} ({first_id}) => W (wins), L (looses), D (draw): "
-            )
+            result = input(f"Enter result for {first_player} ({first_id}) => W (wins), L (looses), D (draw): ")
             continue
         return result
 
     @staticmethod
-    def print_first_player_wins_and_score(
-        first_player, first_id, second_player, second_id
-    ):
+    def print_first_player_wins_and_score(first_player, first_id, second_player, second_id):
+
         """A static method to announce the victory of the first player."""
 
         print(ViewMatch.line)
@@ -38,6 +33,7 @@ class ViewMatch:
 
     @staticmethod
     def print_draw(first_player, first_id, second_player, second_id):
+
         """A static method to announce a draw."""
 
         print(ViewMatch.line)

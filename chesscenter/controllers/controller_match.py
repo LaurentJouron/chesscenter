@@ -1,5 +1,5 @@
-from models.model_match import ModelMatch
-from views.view_match import ViewMatch
+from chesscenter.models.model_match import ModelMatch
+from chesscenter.views.view_match import ViewMatch
 
 
 class ControllerMatch:
