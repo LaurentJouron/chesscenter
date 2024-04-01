@@ -60,6 +60,28 @@ class PlayerModel:
             else PlayerModel.data_players.insert(self.__dict__)
         )
 
+    @classmethod
+    def get_player_by_id(cls, id_number) -> "PlayerModel":
+        if player_data := cls.data_players.search(
+            where("id_number") == id_number
+        ):
+            return cls(**player_data[0])
+        return None
+
+    @classmethod
+    def get_player_by_lastname(cls, last_name) -> "PlayerModel":
+        if player_data := cls.data_players.search(
+            where("last_name") == last_name
+        ):
+            return cls(**player_data[0])
+        return None
+
+    @classmethod
+    def get_player_by_rank(cls, rank) -> "PlayerModel":
+        if player_data := cls.data_players.search(where("rank") == rank):
+            return cls(**player_data[0])
+        return None
+
     def _checks(self):
         self._check_names()
 

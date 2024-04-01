@@ -28,4 +28,4 @@ class BaseMenu(BaseView):
             str: The user's choice.
         """
         choice = self._select_number()
-        return choice if choice in menu_dict else self._message_error(choice)
+        return choice if choice in menu_dict else self._value_error(choice)

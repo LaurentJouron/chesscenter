@@ -2,7 +2,7 @@ from ..utils.bases.controllers import BaseController
 
 # from models.player_models import PlayerModel
 # from controllers.controller_tournament import ControllerTournament
-from ..controllers.player_controllers import PlayerController
+from .player_controllers import PlayerController
 from ..views.home_views import HomeView
 from ..utils.constants import CONFIRMATION_MENU
 

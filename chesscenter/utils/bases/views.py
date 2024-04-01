@@ -30,7 +30,7 @@ class BaseView:
         validator = validator or type(self).string_validator
         while True:
             answer = input(prompt).strip()
-            if validator(answer) and answer > 0:
+            if validator(answer):
                 return answer
 
     def _get_int(self, prompt, validator=None):

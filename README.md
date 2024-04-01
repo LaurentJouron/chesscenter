@@ -68,8 +68,8 @@ Certaines fonctions - comme la revue des joueurs et les tournois - ne sont vraim
 
 En plus du programme, un ensemble de données (joueurs, matchs, tours) a été ajouté pour générer des tournois de façon aléatoire.
 
-Pour générer un tournoi, lancer le fichier ``tournament_random.py`` à partir d'un terminal, dans le dossier de niveau supérieur du projet :
-  * ``python random_tournament.py``
+Pour générer un tournoi, lancer le fichier ``generate_data.py`` à partir d'un terminal, dans le dossier de niveau supérieur du projet :
+  * ``python generate_data.py``
 
 Le script va générer un ensemble de 50 joueurs et 10 tournois aléatoires.
 

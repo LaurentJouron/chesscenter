@@ -30,31 +30,24 @@ class ControllerTournament:
         return tournament_inputs
 
     def start_tournament():
-        start_date = datetime.now().replace(microsecond=0)
-        return start_date
+        return datetime.now().replace(microsecond=0)
+
+    def end_tournament():
+        return datetime.now().replace(microsecond=0)
 
     def introduce_players():
         return view.enter_tournament_players()
 
-    def generate_pairs(round_pairs):
+    def generate_pairs(self):
         view.announce_round_matches()
-        i = 1
-        while i < 5:
-            first_player = round_pairs[i - 1][0].last_name
-            first_id = round_pairs[i - 1][0].id_number
-            second_player = round_pairs[i - 1][1].last_name
-            second_id = round_pairs[i - 1][1].id_number
+        for i in range(1, 5):
+            first_player = self[i - 1][0].last_name
+            first_id = self[i - 1][0].id_number
+            second_player = self[i - 1][1].last_name
+            second_id = self[i - 1][1].id_number
             view.print_pairs(
                 i, ((first_player, first_id), (second_player, second_id))
             )
-            i += 1
-
-    def end_tournament():
-        end_date = datetime.now().replace(microsecond=0)
-        return end_date
-
-    def print_ending_message():
-        return view.print_ending_message()
 
     def generate_new_tournament(self):
         # Step 1 : Starting a tournament
@@ -93,40 +86,22 @@ class ControllerTournament:
 
             # Step 5: Generating matches according to Swiss-pairing algorithm
 
-            if len(self.model.rounds_list) == 0:
+            if not self.model.rounds_list:
                 round_pairs = self.model.generate_pairs_by_ranking(
                     deserialized_players
                 )
 
-                # Optional section to print the round pairs
-                # And visualize the functioning of Swiss-pairing algorithm
-
-                print("Round pairs\n")
-                print(round_pairs)
-                print("\n")
-
-                # End of section
-
-                ControllerTournament.generate_pairs(round_pairs)
-                pairs_list.extend(round_pairs)
-
+                self._extracted_from_generate_new_tournament_46(
+                    round_pairs, pairs_list
+                )
             elif len(self.model.rounds_list) in range(1, 5):
                 round_pairs = self.model.generate_pairs_by_score(
                     self.model, deserialized_players, pairs_list
                 )
 
-                # Optional section to print the round pairs
-                # And visualize the functioning of Swiss-pairing algorithm
-
-                print("Round pairs\n")
-                print(round_pairs)
-                print("\n")
-
-                # End of section
-
-                ControllerTournament.generate_pairs(round_pairs)
-                pairs_list.extend(round_pairs)
-
+                self._extracted_from_generate_new_tournament_46(
+                    round_pairs, pairs_list
+                )
             print(view.star_line)
 
             # Step 6 : Playing the matches of the round
@@ -229,29 +204,45 @@ class ControllerTournament:
             serialized_tournament
         )
 
-    def take_third(elem):
-        return elem[2]
+    # TODO Rename this here and in `generate_new_tournament`
+    def _extracted_from_generate_new_tournament_46(
+        self, round_pairs, pairs_list
+    ):
+        # Optional section to print the round pairs
+        # And visualize the functioning of Swiss-pairing algorithm
 
-    def order_players_by_ranking(database):
-        players_to_sort = database["players_list"]
+        print("Round pairs\n")
+        print(round_pairs)
+        print("\n")
+
+        # End of section
+
+        ControllerTournament.generate_pairs(round_pairs)
+        pairs_list.extend(round_pairs)
+
+    def take_third(self):
+        return self[2]
+
+    def order_players_by_ranking(self):
+        players_to_sort = self["players_list"]
         players_sorted_by_ranking = sorted(
             players_to_sort, key=ControllerTournament.take_third, reverse=True
         )
         view.order_players_by_ranking(players_sorted_by_ranking)
 
-    def order_players_by_last_name(database):
-        players_sorted_by_last_name = sorted(database["players_list"])
+    def order_players_by_last_name(self):
+        players_sorted_by_last_name = sorted(self["players_list"])
         view.order_players_by_last_name(players_sorted_by_last_name)
 
-    def print_matching_results(results):
+    def print_matching_results(self):
         # The user selects a tournament among the matching tournaments
 
-        if len(results) == 1:
-            search_result = results[0]
+        if len(self) == 1:
+            search_result = self[0]
 
-        elif len(results) > 1:
-            tournament_choice = view.choose_tournament(results)
-            search_result = results[tournament_choice - 1]
+        elif len(self) > 1:
+            tournament_choice = view.choose_tournament(self)
+            search_result = self[tournament_choice - 1]
             print("\n")
 
         # The user can print the player of the tournament selected.
@@ -324,39 +315,40 @@ class ControllerTournament:
         elif choice in "cC":
             ControllerTournament.search_tournament_by_year()
 
-    def slice_results(list_to_slice):
+    def slice_results(self):
         return [
             list_to_slice[i : i + 9] for i in range(0, len(list_to_slice), 9)
         ]
 
-    def see_chunks_items(chunked_list):
-        if len(chunked_list) == 0:
+    def see_chunks_items(self):
+        if len(self) == 0:
             view.return_no_tournament()
 
-        elif len(chunked_list) > 0 and len(chunked_list) <= 9:
-            i = 1
-            for chunk in chunked_list:
+        elif len(self) > 0 and len(self) <= 9:
+            for i, chunk in enumerate(self, start=1):
                 view.print_chunk_tournaments(chunk, i)
-                i += 1
+        elif len(self) > 9:
+            return self._extracted_from_see_chunks_items_12()
 
-        elif len(chunked_list) > 9:
-            i = 1
-            chunks = ControllerTournament.slice_results(chunked_list)
-            for elt in chunks[0]:
-                view.print_chunk_tournaments(elt, i)
-                i += 1
-            j = 1
-            while j < len(chunks):
-                see_more = view.see_more_results()
-                if see_more in "yY":
-                    print("\n")
-                    for elt in chunks[j]:
-                        view.print_chunk_tournaments(elt, i + j - 1)
-                        j += 1
-                elif see_more in "nN":
-                    break
+    # TODO Rename this here and in `see_chunks_items`
+    def _extracted_from_see_chunks_items_12(self):
+        i = 1
+        chunks = ControllerTournament.slice_results(self)
+        for elt in chunks[0]:
+            view.print_chunk_tournaments(elt, i)
+            i += 1
+        j = 1
+        while j < len(chunks):
+            see_more = view.see_more_results()
+            if see_more in "yY":
+                print("\n")
+                for elt in chunks[j]:
+                    view.print_chunk_tournaments(elt, i + j - 1)
+                    j += 1
+            elif see_more in "nN":
+                break
 
-            return len(chunked_list)
+        return len(self)
 
     def get_all_tournaments(self):
         view.print_all_tournaments()
@@ -365,10 +357,7 @@ class ControllerTournament:
 
         chunks = ControllerTournament.see_chunks_items(all_tournaments)
 
-        if chunks is None:
-            pass
-
-        else:
+        if chunks is not None:
             see_details_or_not = view.see_details_or_not()
 
             if see_details_or_not in "yY":
@@ -382,6 +371,3 @@ class ControllerTournament:
                 ]
 
                 self.model.deserialize_matches_and_rounds(searched_tournament)
-
-            elif see_details_or_not in "nN":
-                pass
