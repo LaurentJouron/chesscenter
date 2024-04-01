@@ -375,7 +375,7 @@ class ControllerTournament:
         """A function to split a list into 40 chunks."""
 
         return [
-            list_to_slice[i : i + 9] for i in range(0, len(list_to_slice), 9)
+            list_to_slice[i: i + 9] for i in range(0, len(list_to_slice), 9)
         ]
 
     def see_chunks_items(chunked_list):

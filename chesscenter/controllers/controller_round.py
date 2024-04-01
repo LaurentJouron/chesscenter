@@ -26,12 +26,11 @@ class ControllerRound:
     def end_round():
         """A function to end a round."""
 
-        end_date = datetime.now().replace(microsecond=0)
-        return end_date
+        return datetime.now().replace(microsecond=0)
 
-    def print_round_results(i, start_date, end_date, list_of_matches):
+    def print_round_results(self, start_date, end_date, list_of_matches):
         """A function to print the results of a round."""
 
         return ViewRound.print_round_results(
-            i, start_date, end_date, list_of_matches
+            self, start_date, end_date, list_of_matches
         )

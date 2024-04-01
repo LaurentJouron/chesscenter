@@ -57,15 +57,18 @@ class ModelTournament:
     def __str__(self):
         return (
             f"Tournament name: {self.name}\n\n Location: {self.location} \n\n"
-            + f"Dates: from {self.start_date} to {self.end_date} \n\n"
-            + f"Description: {self.description}\n\n"
-            + f"Time control: {self.time_control}\n\n"
-            + f"Participants: \n{self.players_list[0]}, "
-            + f"\n{self.players_list[1]}, \n{self.players_list[2]} \n{self.players_list[3]}, "
-            + f"\n{self.players_list[4]} \n{self.players_list[5]}, \n{self.players_list[6]}"
-            + f"\n{self.players_list[7]}\n\n"
-            + f"Results: {self.rounds[0]}\n {self.rounds[1]}\n {self.rounds[2]}\n"
-            + f"{self.rounds[3]}\n"
+            f"Dates: from {self.start_date} to {self.end_date} \n\n"
+            f"Description: {self.description}\n\n"
+            f"Time control: {self.time_control}\n\n"
+            f"Participants: \n{self.players_list[0]}, "
+            f"\n{self.players_list[1]}, \n{self.players_list[2]} \n"
+            f"{self.players_list[3]}, "
+            f"\n{self.players_list[4]} \n{self.players_list[5]}, \n"
+            f"{self.players_list[6]}"
+            f"\n{self.players_list[7]}\n\n"
+            f"Results: {self.rounds[0]}\n {self.rounds[1]}\n "
+            f"{self.rounds[2]}\n"
+            f"{self.rounds[3]}\n"
         )
 
     @property
@@ -84,7 +87,7 @@ class ModelTournament:
 
     @location.setter
     def location(self, new_location):
-        if all(x.isalpha() or x.isspace() for x in new_location) is False:
+        if not all(char.isalpha() or char.isspace() for char in new_location):
             print("Please enter a valid location.")
         self._location = new_location
 
@@ -142,7 +145,7 @@ class ModelTournament:
 
     @time_control.setter
     def time_control(self, new_time_control):
-        if not new_time_control.lower() in ("blitz", "rapid", "bullet"):
+        if new_time_control.lower() not in ("blitz", "rapid", "bullet"):
             print("Please enter a valid time control (blitz, bullet, rapid).")
         self._time_control = new_time_control
 
@@ -267,7 +270,8 @@ class ModelTournament:
                 # of the algorithm
                 print("Redundant pair: ")
                 print(
-                    f"{pair[0].last_name} ({pair[0].id_number}) vs {pair[1].last_name} ({pair[1].id_number})\n"
+                    f"{pair[0].last_name} ({pair[0].id_number}) vs "
+                    f"{pair[1].last_name} ({pair[1].id_number})\n"
                 )
                 # End of section
 
@@ -282,8 +286,10 @@ class ModelTournament:
                         # Optional section
                         print("Redundant pair: ")
                         print(
-                            f"{round_pairs[n][0].last_name} ({round_pairs[n][0].id_number})"
-                            + f" vs {round_pairs[n][1].last_name} ({round_pairs[n][1].id_number})\n"
+                            f"{round_pairs[n][0].last_name} "
+                            f"({round_pairs[n][0].id_number})"
+                            f" vs {round_pairs[n][1].last_name} "
+                            f"({round_pairs[n][1].id_number})\n"
                         )
                         # End of section
 
@@ -291,37 +297,39 @@ class ModelTournament:
                             round_pairs, n, players_by_score, 1, 3, 2
                         )
 
-                        if (round_pairs[n] or inverted_pair) in pairs_list:
+                    if (round_pairs[n] or inverted_pair) in pairs_list:
 
-                            # Optional section
-                            print("Redundant pair:")
-                            print(
-                                f"{round_pairs[n][0].last_name} ({round_pairs[n][0].id_number})"
-                                + f" vs {round_pairs[n][1].last_name} ({round_pairs[n][1].id_number})\n"
+                        # Optional section
+                        print("Redundant pair:")
+                        print(
+                            f"{round_pairs[n][0].last_name} "
+                            f"({round_pairs[n][0].id_number})"
+                            f" vs {round_pairs[n][1].last_name} "
+                            f"({round_pairs[n][1].id_number})\n"
+                        )
+                        # End of section
+
+                        if n in range(0, 2):
+                            ModelTournament.swiss_pair(
+                                round_pairs, n, players_by_score, 2, 4, 5
                             )
-                            # End of section
-
-                            if n in range(0, 2):
-                                ModelTournament.swiss_pair(
-                                    round_pairs, n, players_by_score, 2, 4, 5
-                                )
-                                round_pairs[n + 1] = (
-                                    players_by_score[2 * n + 2],
-                                    players_by_score[2 * n + 3],
-                                )
-                            elif n == 2:
-                                ModelTournament.swiss_pair(
-                                    round_pairs,
-                                    n,
-                                    players_by_score,
-                                    -1,
-                                    -1,
-                                    -2,
-                                )
-                                round_pairs[n + 1] = (
-                                    players_by_score[2 * n + 2],
-                                    players_by_score[2 * n + 3],
-                                )
+                            round_pairs[n + 1] = (
+                                players_by_score[2 * n + 2],
+                                players_by_score[2 * n + 3],
+                            )
+                        elif n == 2:
+                            ModelTournament.swiss_pair(
+                                round_pairs,
+                                n,
+                                players_by_score,
+                                -1,
+                                -1,
+                                -2,
+                            )
+                            round_pairs[n + 1] = (
+                                players_by_score[2 * n + 2],
+                                players_by_score[2 * n + 3],
+                            )
 
                 elif n == 3:
                     ModelTournament.swiss_pair(
@@ -337,19 +345,19 @@ class ModelTournament:
                         ModelTournament.swiss_pair(
                             round_pairs, n, players_by_score, -1, -2, -1
                         )
-                        if (round_pairs[n] or inverted_pair) in pairs_list:
+                    if (round_pairs[n] or inverted_pair) in pairs_list:
 
-                            # Optional section
-                            print(f"Redundant pair: {round_pairs[n]}\n")
-                            # End of section
+                        # Optional section
+                        print(f"Redundant pair: {round_pairs[n]}\n")
+                        # End of section
 
-                            ModelTournament.swiss_pair(
-                                round_pairs, n, players_by_score, -2, -3, -4
-                            )
-                            round_pairs[n - 1] = (
-                                players_by_score[4],
-                                players_by_score[5],
-                            )
+                        ModelTournament.swiss_pair(
+                            round_pairs, n, players_by_score, -2, -3, -4
+                        )
+                        round_pairs[n - 1] = (
+                            players_by_score[4],
+                            players_by_score[5],
+                        )
 
         return round_pairs
 
@@ -455,8 +463,8 @@ class ModelTournament:
         for i in range(0, 8):
             print(
                 f"({dt_players_list[i][1]})"
-                + f" {dt_players_list[i][0]}"
-                + f" - ranking: {dt_players_list[i][2]}"
+                f" {dt_players_list[i][0]}"
+                f" - ranking: {dt_players_list[i][2]}"
             )
         print("\nResults\n")
         for round in deserialized_trnmt.rounds:

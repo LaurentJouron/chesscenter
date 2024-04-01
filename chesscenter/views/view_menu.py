@@ -22,16 +22,18 @@ class ViewMenu:
 
         option_choice = input(
             (
-                "Generate Tournament [1]    Players Database [2]    Tournaments Database [3]"
-                + "    Quit Program [4]\n\n"
+                "Generate Tournament [1]    Players Database [2]    "
+                "Tournaments Database [3]"
+                "    Quit Program [4]\n\n"
             ).center(80)
         )
         while str(option_choice) not in "1234" or str(option_choice) in "":
             print("Choose a number between 1 and 4\n")
             option_choice = input(
                 (
-                    "Generate Tournament [1]    Players Database [2]    Tournaments Database [3]"
-                    + "    Quit Program [4]\n\n"
+                    "Generate Tournament [1]    Players Database [2]    "
+                    "Tournaments Database [3]"
+                    "    Quit Program [4]\n\n"
                 ).center(80)
             )
             continue
@@ -52,12 +54,14 @@ class ViewMenu:
 
         print("\nPlayers Database\n")
         option_choice = input(
-            "See all players [1]    Change player ranking [2]    Add new player [3]\n\n"
+            "See all players [1]    Change player ranking [2]    "
+            "Add new player [3]\n\n"
         )
         while str(option_choice) not in "123" or str(option_choice) in "":
             print("Choose a number between 1 and 3\n")
             option_choice = input(
-                "See all players [1]    Change Player Ranking [2]    Add new player [3]\n\n"
+                "See all players [1]    Change Player Ranking [2]    "
+                "Add new player [3]\n\n"
             )
 
             continue
@@ -95,18 +99,18 @@ class ViewMenu:
 
         choice = input(
             "\nSearch tournament (Enter option number): \n\n"
-            + "By name [A]\n"
-            + "By location [B]\n"
-            + "By year [C]\n\n"
+            "By name [A]\n"
+            "By location [B]\n"
+            "By year [C]\n\n"
         )
 
         while choice not in "aAbBcC" or choice in "":
             print("Choose a correct number.")
             choice = input(
                 "\nSearch tournament (Enter option number): \n\n"
-                + "By name [A]\n"
-                + "By location [B]\n"
-                + "By year [C]\n\n"
+                "By name [A]\n"
+                "By location [B]\n"
+                "By year [C]\n\n"
             )
             continue
 

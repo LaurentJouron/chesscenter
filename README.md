@@ -58,7 +58,7 @@ Activer l'environnement de travail (environnement virtuel) avec
   * ``pipenv shell``
 
 Pour lancer l'application depuis le terminal
-  * ``python -m chesscenter``
+  * ``python chess_center.py``
 
 ___
 

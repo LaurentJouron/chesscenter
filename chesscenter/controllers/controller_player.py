@@ -193,7 +193,7 @@ class ControllerPlayer:
         """A function to split a list into 40 chunks."""
 
         return [
-            list_to_slice[i : i + 39] for i in range(0, len(list_to_slice), 39)
+            list_to_slice[i: i + 39] for i in range(0, len(list_to_slice), 39)
         ]
 
     def see_chunks_items(chunked_list):
@@ -310,8 +310,7 @@ class ControllerPlayer:
             ViewPlayer.return_no_player()
 
         elif len(players) > 0:
-            serialized_player = ControllerPlayer.return_search_results(players)
-            return serialized_player
+            return ControllerPlayer.return_search_results(players)
 
     def search_player_with_id_number():
         """A function to search a player in models/players_database.json
@@ -328,8 +327,7 @@ class ControllerPlayer:
             ViewPlayer.return_no_player()
 
         elif len(players) > 0:
-            serialized_player = ControllerPlayer.return_search_results(players)
-            return serialized_player
+            return ControllerPlayer.return_search_results(players)
 
     def get_player():
         """A function to retrieve a serialized player
@@ -340,9 +338,6 @@ class ControllerPlayer:
         option_number = ViewPlayer.search_player()
 
         if option_number == "1":
-            searched_player = ControllerPlayer.search_player_with_last_name()
-            return searched_player
-
+            return ControllerPlayer.search_player_with_last_name()
         elif option_number == "2":
-            searched_player = ControllerPlayer.search_player_with_id_number()
-            return searched_player
+            return ControllerPlayer.search_player_with_id_number()

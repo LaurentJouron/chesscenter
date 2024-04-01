@@ -358,11 +358,11 @@ class RandomPlayer:
         id_number = players_id_database[i]
         random_ranking = RandomPlayer.players_rankings_database[i]
 
-        random_year = random.randrange(1921, 2003)
+        random_year = random.randrange(1921, 2006)
         random_month = random.randrange(1, 12)
-        if random_month in [1, 3, 5, 7, 8, 10, 12]:
+        if random_month in {1, 3, 5, 7, 8, 10, 12}:
             random_day = random.randrange(1, 31)
-        elif random_month in [4, 6, 9, 11]:
+        elif random_month in {4, 6, 9, 11}:
             random_day = random.randrange(1, 30)
         elif random_month == 2:
             random_day = random.randrange(1, 28)
@@ -372,7 +372,7 @@ class RandomPlayer:
             random_day = str(random_day).zfill(2)
         random_birth_date = f"{random_year}.{random_month}.{random_day}"
 
-        random_player = ModelPlayer(
+        return ModelPlayer(
             random_last_name,
             random_first_name,
             id_number,
@@ -381,12 +381,10 @@ class RandomPlayer:
             random_ranking,
         )
 
-        return random_player
-
 
 if __name__ == "__main__":
 
-    for i in range(1, 9):
+    for _ in range(1, 9):
         player = RandomPlayer.generate_random_player()
         serialized_player = ModelPlayer.serialize_player(player)
         ModelPlayer.save_player_to_database(serialized_player)

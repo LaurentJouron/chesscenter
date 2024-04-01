@@ -33,21 +33,21 @@ class ModelPlayer:
     def __repr__(self):
         return (
             f"(Player {self.id_number}: "
-            + f"{self.first_name} {self.last_name}"
-            + f", Gender: {self.gender}"
-            + f", Date of birth: {self.birth_date}"
-            + f", Ranking: {self.ranking}"
-            + f", Score: {self.score})"
+            f"{self.first_name} {self.last_name}, "
+            f"Gender: {self.gender},"
+            f"Date of birth: {self.birth_date}, "
+            f"Ranking: {self.ranking}, "
+            f"Score: {self.score})"
         )
 
     def __str__(self):
         return (
             f"\nPlayer {self.id_number}: "
-            + f"{self.first_name} {self.last_name}\n"
-            + f"Gender: {self.gender}\n"
-            + f"Date of birth (YYYY.MM.DD): {self.birth_date}\n"
-            + f"Current ranking: {self.ranking}\n"
-            + f"Score: {self.score}"
+            f"{self.first_name} {self.last_name}\n"
+            f"Gender: {self.gender}\n"
+            f"Date of birth (YYYY.MM.DD): {self.birth_date}\n"
+            f"Current ranking: {self.ranking}\n"
+            f"Score: {self.score}"
         )
 
     @property

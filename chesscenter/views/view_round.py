@@ -1,10 +1,9 @@
-class ViewRound():
+class ViewRound:
 
-    line = (100*"*")
+    line = 100 * "*"
 
     @staticmethod
     def start_round(i):
-
         """A static method to announce the start of a round."""
 
         print("\n")
@@ -16,7 +15,6 @@ class ViewRound():
 
     @staticmethod
     def print_round_results(i, start_date, end_date, list_of_matches):
-
         """A static method to print the results of a round."""
 
         print(f"ROUND {i} RESULTS")

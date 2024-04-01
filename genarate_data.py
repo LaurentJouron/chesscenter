@@ -15,9 +15,11 @@ from tinydb import Query
    then random tournaments for chess_scores_manager program.
 
     The script uses ControllerTournament.generate_new_tournament() function
-    and includes random variables generated with the functions defined in random_variables.py
+    and includes random variables generated with the functions defined in
+    random_variables.py
 
-    Before playing tournaments, 100 random players are generated with Random.generate_random_player() function
+    Before playing tournaments, 100 random players are generated with
+    Random.generate_random_player() function
     then added to ModelPlayer.players_database database of all players."""
 
 
@@ -136,11 +138,9 @@ class RandomTournament:
     ]
 
     # List of the random start dates already attributed
-
     random_dates_attributed = []
 
     # List of the ID numbers already attributed
-
     time_control_options = ["Blitz", "Rapid", "Bullet"]
 
     def __init__(self, name, location, start_date, end_date):
@@ -259,7 +259,7 @@ class RandomTournament:
                 # Step 5: Generating matches
                 # according to Swiss-pairing algorithm
 
-                if len(ModelTournament.rounds_list) == 0:
+                if not ModelTournament.rounds_list:
                     generate_pairs = ModelTournament.generate_pairs_by_ranking
                     round_pairs = generate_pairs(deserialized_players)
                     pairs_list.extend(round_pairs)
@@ -350,7 +350,7 @@ if __name__ == "__main__":
 
     # We generate 8 random players
 
-    for i in range(1, 51):
+    for _ in range(1, 51):
         player = RandomPlayer.generate_random_player()
         serialized_player = ModelPlayer.serialize_player(player)
         ModelPlayer.save_player_to_database(serialized_player)
