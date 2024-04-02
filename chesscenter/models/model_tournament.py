@@ -29,7 +29,7 @@ class ModelTournament:
       List of players = [(player1, ID, ranking), (player2, ID, ranking)...]"""
 
     tournaments_database = TinyDB(
-        "chesscenter/models/tournaments_database.json"
+        "chesscenter/models/tournaments_database.json", indent=4
     )
     number_of_rounds = 0
     rounds_list = []

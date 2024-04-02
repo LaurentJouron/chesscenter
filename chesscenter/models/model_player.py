@@ -16,8 +16,12 @@ class ModelPlayer:
     - Ranking (positive float);
     - Score (initial value 0)."""
 
-    players_database = TinyDB("chesscenter/models/players_database.json")
-    tournament_players = TinyDB("chesscenter/models/tournament_players.json")
+    players_database = TinyDB(
+        "chesscenter/models/players_database.json", indent=4
+    )
+    tournament_players = TinyDB(
+        "chesscenter/models/tournament_players.json", indent=4
+    )
 
     def __init__(
         self, last_name, first_name, id_number, birth_date, gender, ranking
