@@ -135,4 +135,4 @@ class ViewMenu:
     def quit_program():
         """A static method to print the end of the program."""
 
-        print("\nThank you for using Chess Scores Manager !")
+        print("\nThank you for using Chess-center !")
